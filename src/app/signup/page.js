@@ -59,11 +59,9 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-sm rounded-lg p-8 w-full max-w-2xl space-y-6"
-      >
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">  
+      <form onSubmit={handleSubmit}
+        className="bg-white shadow-sm rounded-lg p-8 w-full max-w-2xl space-y-6">
         <h2 className="text-2xl font-normal text-gray-900 text-center">
           Create your account
         </h2>
@@ -74,114 +72,114 @@ export default function Signup() {
           <p className="text-gray-600 text-sm font-medium">
             All questions are required to find your perfect match
             <span className="text-sm text-gray-500 pl-2">Must be VIT Chennai or nearby areas</span>
-          </div>
+          </p>
+        </div>
 
-          <div className="space-y-2">
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
-            >
-              <option value="" className="text-gray-500">Select Gender Preference</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="any">No Preference</option>
-            </select>
-          </div>
+        <div className="space-y-2">
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+          >
+            <option value="" className="text-gray-500">Select Gender Preference</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="any">No Preference</option>
+          </select>
+        </div>
 
-          <div className="space-y-2">
-            <select
-              name="relationshipGoal"
-              value={formData.relationshipGoal}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
-            >
-              <option value="" className="text-gray-500">What are you looking for?</option>
-              <option value="longTerm">Long-term relationship</option>
-              <option value="casual">Something casual</option>
-            </select>
-          </div>
+        <div className="space-y-2">
+          <select
+            name="relationshipGoal"
+            value={formData.relationshipGoal}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+          >
+            <option value="" className="text-gray-500">What are you looking for?</option>
+            <option value="longTerm">Long-term relationship</option>
+            <option value="casual">Something casual</option>
+          </select>
+        </div>
 
-          <div className="space-y-2">
-            <select
-              name="lifestyle"
-              value={formData.lifestyle}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
-            >
-              <option value="" className="text-gray-500">Which best describes your lifestyle?</option>
-              <option value="social">Social butterfly (love going out, events, meeting people)</option>
-              <option value="balanced">Balanced (a mix of going out and quiet time)</option>
-              <option value="lowKey">Low-key (prefer home, cozy nights, fewer social outings)</option>
-            </select>
-          </div>
+        <div className="space-y-2">
+          <select
+            name="lifestyle"
+            value={formData.lifestyle}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+          >
+            <option value="" className="text-gray-500">Which best describes your lifestyle?</option>
+            <option value="social">Social butterfly (love going out, events, meeting people)</option>
+            <option value="balanced">Balanced (a mix of going out and quiet time)</option>
+            <option value="lowKey">Low-key (prefer home, cozy nights, fewer social outings)</option>
+          </select>
+        </div>
 
-          <div className="space-y-2">
-            <select
-              name="weekendVibe"
-              value={formData.weekendVibe}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
-            >
-              <option value="" className="text-gray-500">What's your weekend vibe?</option>
-              <option value="outdoorsy">Outdoorsy/adventurous</option>
-              <option value="homebody">Relaxing at home</option>
-              <option value="explorer">Exploring food, culture, or nightlife</option>
-              <option value="productive">Catching up on hobbies/work</option>
-            </select>
-          </div>
+        <div className="space-y-2">
+          <select
+            name="weekendVibe"
+            value={formData.weekendVibe}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+          >
+            <option value="" className="text-gray-500">What's your weekend vibe?</option>
+            <option value="outdoorsy">Outdoorsy/adventurous</option>
+            <option value="homebody">Relaxing at home</option>
+            <option value="explorer">Exploring food, culture, or nightlife</option>
+            <option value="productive">Catching up on hobbies/work</option>
+          </select>
+        </div>
 
-          <div className="space-y-2">
-            <select
-              name="schedule"
-              value={formData.schedule}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
-            >
-              <option value="" className="text-gray-500">Are you more of a...</option>
-              <option value="earlyBird">Early bird</option>
-              <option value="nightOwl">Night owl</option>
-              <option value="flexible">Flexible / depends on the day</option>
-            </select>
-          </div>
+        <div className="space-y-2">
+          <select
+            name="schedule"
+            value={formData.schedule}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+          >
+            <option value="" className="text-gray-500">Are you more of a...</option>
+            <option value="earlyBird">Early bird</option>
+            <option value="nightOwl">Night owl</option>
+            <option value="flexible">Flexible / depends on the day</option>
+          </select>
+        </div>
 
-          <div className="space-y-2">
-            <select
-              name="activityLevel"
-              value={formData.activityLevel}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
-            >
-              <option value="" className="text-gray-500">How active are you?</option>
-              <option value="veryActive">Very active (sports, gym, outdoors often)</option>
-              <option value="moderatelyActive">Moderately active (occasional exercise, walking, casual sports)</option>
-              <option value="notActive">Not active (prefer relaxing, low physical activity)</option>
-            </select>
-          </div>
+        <div className="space-y-2">
+          <select
+            name="activityLevel"
+            value={formData.activityLevel}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+          >
+            <option value="" className="text-gray-500">How active are you?</option>
+            <option value="veryActive">Very active (sports, gym, outdoors often)</option>
+            <option value="moderatelyActive">Moderately active (occasional exercise, walking, casual sports)</option>
+            <option value="notActive">Not active (prefer relaxing, low physical activity)</option>
+          </select>
+        </div>
 
-          <div className="space-y-2">
-            <select
-              name="loveLanguage"
-              value={formData.loveLanguage}
-              onChange={handleChange}
-              required
-              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
-            >
-              <option value="" className="text-gray-500">What's your love language?</option>
-              <option value="wordsOfAffirmation">Words of affirmation</option>
-              <option value="qualityTime">Quality time</option>
-              <option value="actsOfService">Acts of service</option>
-              <option value="physicalTouch">Physical touch</option>
-              <option value="gifts">Gifts</option>
-            </select>
-          </div>
+        <div className="space-y-2">
+          <select
+            name="loveLanguage"
+            value={formData.loveLanguage}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+          >
+            <option value="" className="text-gray-500">What's your love language?</option>
+            <option value="wordsOfAffirmation">Words of affirmation</option>
+            <option value="qualityTime">Quality time</option>
+            <option value="actsOfService">Acts of service</option>
+            <option value="physicalTouch">Physical touch</option>
+            <option value="gifts">Gifts</option>
+          </select>
         </div>
 
         <button

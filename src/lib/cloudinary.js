@@ -1,8 +1,20 @@
-// Later replace with Cloudinary SDK logic
-// This mock just returns a fake URL with timestamp
+import cloudinary from 'cloudinary';
 
-export default async function uploadToCloudinary(file) {
-  // file = formidable uploaded file object
-  const fakeUrl = `https://res.cloudinary.com/demo/image/upload/v${Date.now()}/${file.originalFilename}`;
-  return fakeUrl;
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+export async function uploadToCloudinary(filePath, folder = 'uploads') {
+  return new Promise((resolve, reject) => {
+    cloudinary.v2.uploader.upload(
+      filePath,
+      { folder },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+  });
 }
