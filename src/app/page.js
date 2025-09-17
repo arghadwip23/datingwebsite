@@ -6,15 +6,6 @@ import { macondoSwashCaps, inter } from "./fonts";
 const VitDatingApp = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="px-6 py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold text-black">
-          VitDating
-        </div>
-        <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-          <User className="w-5 h-5 text-gray-600" />
-        </div>
-      </header>
 
       {/* Main Content */}
       <main className="px-6 py-16">
