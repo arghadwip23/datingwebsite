@@ -1,70 +1,73 @@
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
-import formidable from "formidable";
-import path from "path";
-import uploadToCloudinary from "@/lib/cloudinary";
+import { uploadToCloudinary } from "@/lib/cloudinary";
 
-export const config = {
-  api: {
-    bodyParser: false, // we use formidable
-  },
-};
-
-const parseForm = (req) =>
-  new Promise((resolve, reject) => {
-    const form = formidable({ multiples: false, uploadDir: "./tmp", keepExtensions: true });
-
-    form.on("fileBegin", (name, file) => {
-      file.filepath = path.join(process.cwd(), "tmp", file.originalFilename);
-    });
-
-    form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
-      resolve({ fields, files });
-    });
-  });
-
-export default async function handler(req, res) {
+export async function POST(req) {
   await dbConnect();
 
-  if (req.method === "POST") {
-    try {
-      const { fields, files } = await parseForm(req);
+  try {
+    // 1️⃣ Get form data
+    const formData = await req.formData();
 
-      // 1️⃣ Hash the password
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(fields.password, salt);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const instagram = formData.get("instagram");
+    const gender = formData.get("gender");
+    const location = formData.get("location");
+    const relationshipGoal = formData.get("relationshipGoal");
+    const lifestyle = formData.get("lifestyle");
+    const weekendVibe = formData.get("weekendVibe");
+    const schedule = formData.get("schedule");
+    const activityLevel = formData.get("activityLevel");
+    const loveLanguage = formData.get("loveLanguage");
+    const profilePhoto = formData.get("profilePhoto"); // File object
 
-      // 2️⃣ Upload profile photo (mock Cloudinary)
-      let profileUrl = null;
-      if (files.profilePhoto) {
-        profileUrl = await uploadToCloudinary(files.profilePhoto);
-      }
+    // 2️⃣ Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-      // 3️⃣ Save user to DB
-      const newUser = new User({
-        name: fields.name,
-        email: fields.email,
-        password: hashedPassword, // store hashed password
-        instagram: fields.instagram,
-        gender: fields.gender,
-        language: fields.language,
-        location: fields.location,
-        favFood: fields.favFood,
-        weekendPlan: fields.weekendPlan,
-        petLover: fields.petLover,
-        profilePhoto: profileUrl,
-      });
+    // 3️⃣ Upload image to Cloudinary (if provided)
+    let profileUrl = null;
+    if (profilePhoto && typeof profilePhoto.arrayBuffer === "function") {
+      const arrayBuffer = await profilePhoto.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
 
-      await newUser.save();
+      // use filename if available, otherwise fallback
+      const filename = profilePhoto.name || `user_${Date.now()}`;
 
-      res.status(200).json({ success: true, message: "User signed up successfully" });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Error signing up user" });
+      profileUrl = await uploadToCloudinary(buffer, filename);
     }
-  } else {
-    res.status(405).json({ success: false, message: "Method not allowed" });
+
+    // 4️⃣ Save user to MongoDB
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      instagram,
+      gender,
+      location,
+      relationshipGoal,
+      lifestyle,
+      weekendVibe,
+      schedule,
+      activityLevel,
+      loveLanguage,
+      profilePhoto: profileUrl,
+    });
+
+    await newUser.save();
+
+    return new Response(
+      JSON.stringify({ success: true, message: "User signed up successfully" }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
+  } catch (error) {
+    console.error("❌ Signup error:", error);
+    return new Response(
+      JSON.stringify({ success: false, message: "Error signing up user" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }

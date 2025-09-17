@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-// check for missing env
+// Check for missing env variable
 if (!MONGODB_URI) {
   throw new Error("⚠️ Please define the MONGODB_URI environment variable inside .env.local");
 }
 
 /**
  * Global is used here to maintain a cached connection across hot reloads in development.
- * This prevents connections growing exponentially during API route usage.
+ * This prevents creating multiple connections in dev mode.
  */
 let cached = global.mongoose;
 
@@ -23,16 +23,12 @@ async function dbConnect() {
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      })
-      .then((mongoose) => {
-        console.log("✅ MongoDB Connected");
-        return mongoose;
-      });
+    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
+      console.log("✅ MongoDB Connected");
+      return mongoose;
+    });
   }
+
   cached.conn = await cached.promise;
   return cached.conn;
 }
