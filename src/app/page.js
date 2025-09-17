@@ -29,9 +29,9 @@ const VitDatingApp = () => {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             {/* Image */}
             <div className="flex-1 flex justify-center">
-              <div className="w-80 h-80 bg-gray-200 rounded-3xl overflow-hidden">
+              <div className="w-100 h-100 bg-gray-200 rounded-3xl overflow-hidden">
                 <img 
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  src="ciuple.jpg"
                   alt="Students studying together"
                   className="w-full h-full object-cover"
                 />
