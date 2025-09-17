@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,11 @@ export default function Signup() {
     favFood: "",
     weekendPlan: "",
     petLover: "",
+    password: "",
+    confirmPassword: "",
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -32,7 +36,15 @@ export default function Signup() {
 
     // Location check
     if (!formData.location.toLowerCase().includes("vit chennai")) {
-      toast.error("Sorry cutie 😭 Only lovebirds from VIT Chennai or nearby can join!");
+      toast.error(
+        "Sorry cutie 😭 Only lovebirds from VIT Chennai or nearby can join!"
+      );
+      return;
+    }
+
+    // Password check
+    if (formData.password !== formData.confirmPassword) {
+      toast.error("Passwords don’t match 💔 Try again!");
       return;
     }
 
@@ -59,115 +71,157 @@ export default function Signup() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-200 via-red-200 to-yellow-100 p-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-lg space-y-5"
+        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-2xl space-y-6"
       >
         <h2 className="text-3xl font-bold text-center text-pink-600">
           💘 Find Your Perfect VITmate 💘
         </h2>
         <p className="text-center text-gray-500">
-          We only allow lovebirds from VIT Chennai 🏫✨  
+          We only allow lovebirds from VIT Chennai 🏫✨
+          <br />
           (Don’t worry, your location is just for verification — no stalking 🤞)
         </p>
 
-        {/* Inputs */}
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name 😎"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email 📧"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="file"
-          name="profilePhoto"
-          accept="image/*"
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="text"
-          name="instagram"
-          placeholder="Instagram Handle 📸"
-          value={formData.instagram}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        />
+        {/* Grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name 😎"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border rounded-lg text-black"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email 📧"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border rounded-lg text-black"
+          />
+          <input
+            type="file"
+            name="profilePhoto"
+            accept="image/*"
+            onChange={handleChange}
+            required
+            className="w-full p-3 border rounded-lg text-black"
+          />
+          <input
+            type="text"
+            name="instagram"
+            placeholder="Instagram Handle 📸"
+            value={formData.instagram}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-black"
+          />
 
-        <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="">Preferred Gender 💕</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="any">Surprise me 😉</option>
-        </select>
+          {/* Password */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password 🔒"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg text-black"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3 text-pink-600"
+            >
+              {showPassword ? "🙈" : "👀"}
+            </button>
+          </div>
 
-        <select
-          name="language"
-          value={formData.language}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="">Preferred Language 🗣️</option>
-          <option value="english">English</option>
-          <option value="tamil">Tamil</option>
-          <option value="hindi">Hindi</option>
-        </select>
+          {/* Confirm Password */}
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="Confirm Password 🔑"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg text-black"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3 text-pink-600"
+            >
+              {showPassword ? "🙈" : "👀"}
+            </button>
+          </div>
 
-        <input
-          type="text"
-          name="location"
-          placeholder="Your Location 📍"
-          value={formData.location}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border rounded-lg text-black"
+          >
+            <option value="">Preferred Gender 💕</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="any">Surprise me 😉</option>
+          </select>
 
-        {/* Fun questions */}
-        <input
-          type="text"
-          name="favFood"
-          placeholder="Fav Food 🍕🍔"
-          value={formData.favFood}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="text"
-          name="weekendPlan"
-          placeholder="Weekend Plan 🏖️🍿"
-          value={formData.weekendPlan}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        />
+          <select
+            name="language"
+            value={formData.language}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-black"
+          >
+            <option value="">Preferred Language 🗣️</option>
+            <option value="english">English</option>
+            <option value="tamil">Tamil</option>
+            <option value="hindi">Hindi</option>
+          </select>
 
-        <select
-          name="petLover"
-          value={formData.petLover}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="">Do you love pets? 🐶🐱</option>
-          <option value="yes">Yes, they’re my babies ❤️</option>
-          <option value="no">Nope, not really 🙃</option>
-        </select>
+          <input
+            type="text"
+            name="location"
+            placeholder="Your Location 📍"
+            value={formData.location}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border rounded-lg text-black"
+          />
+
+          <input
+            type="text"
+            name="favFood"
+            placeholder="Fav Food 🍕🍔"
+            value={formData.favFood}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-black"
+          />
+          <input
+            type="text"
+            name="weekendPlan"
+            placeholder="Weekend Plan 🏖️🍿"
+            value={formData.weekendPlan}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-black"
+          />
+
+          <select
+            name="petLover"
+            value={formData.petLover}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg text-black"
+          >
+            <option value="">Do you love pets? 🐶🐱</option>
+            <option value="yes">Yes, they’re my babies ❤️</option>
+            <option value="no">Nope, not really 🙃</option>
+          </select>
+        </div>
 
         <button
           type="submit"

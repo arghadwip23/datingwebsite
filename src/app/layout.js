@@ -31,8 +31,8 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${berkshireSwash.variable} antialiased`}
       >
-        <HeartCursor />
         <Navigation />
+        <HeartCursor />
         {children}
       </body>
     </html>
