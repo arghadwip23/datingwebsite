@@ -1,84 +1,135 @@
 "use client";
-import React, { useState } from "react";
+
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
   const router = useRouter();
-  const [form, setForm] = useState({
-    id: "",
+  const [formData, setFormData] = useState({
+    email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await axios.post("/api/login", form);
-      if (res.status === 200) {
-        toast.success("Login successful! Redirecting...");
-        setTimeout(() => router.push("/profile/explore"), 1200);
+
+    setIsSubmitting(true);
+
+    await toast.promise(
+      (async () => {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        if (!res.ok) {
+          const error = await res.json();
+          throw new Error(error.message || "Login failed 😭 Try again!");
+        }
+
+        return res.json();
+      })(),
+      {
+        loading: "Logging you in...",
+        success: "Welcome back! 🎉 Redirecting...",
+        error: (err) => err.message,
       }
-    } catch (err) {
-      toast.error("Invalid ID or password");
-    } finally {
-      setLoading(false);
-    }
+    );
+
+    setIsSubmitting(false);
+    router.push("/profile");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-pink-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded-xl p-8 w-full max-w-sm flex flex-col gap-6"
+        className="bg-white shadow-sm rounded-lg p-8 w-full max-w-md space-y-6"
       >
-        <h2 className="text-2xl font-bold text-center text-pink-600">Login</h2>
-        <input
-          type="text"
-          name="id"
-          placeholder="ID"
-          value={form.id}
-          onChange={handleChange}
-          required
-          className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-          className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
-        />
+        <h2 className="text-2xl font-normal text-gray-900 text-center">
+          Log in to your account
+        </h2>
+
+        <div className="space-y-4">
+          {/* email */}
+          <div className="space-y-2">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500"
+            />
+          </div>
+
+          {/* password */}
+          <div className="space-y-2 relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500 pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+        </div>
+
+        {/* submit button */}
         <button
           type="submit"
-          disabled={loading}
-          className="bg-pink-500 text-white p-3 rounded-lg hover:bg-pink-600 transition disabled:opacity-60"
+          disabled={isSubmitting}
+          className={`w-full p-3 rounded-md text-sm font-medium transition-colors ${
+            isSubmitting
+              ? "bg-gray-400 text-white cursor-not-allowed"
+              : "bg-black text-white hover:bg-gray-800"
+          }`}
         >
-          {loading ? "Logging in..." : "Login"}
+          {isSubmitting ? "Logging in..." : "Log In"}
         </button>
+
+        {/* Link to signup */}
+        <p className="text-center text-sm text-gray-600">
+          Don’t have an account?{" "}
+          <Link href="/signup" className="text-black font-medium hover:underline">
+            Sign up
+          </Link>
+        </p>
       </form>
+
       <Toaster
         position="top-right"
         toastOptions={{
           style: {
-            background: "#ec4899",
+            background: "#18181b",
             color: "#fff",
-            borderRadius: "12px",
-            fontWeight: "bold",
-          },
-          success: {
-            iconTheme: {
-              primary: "#fff",
-              secondary: "#ec4899",
-            },
+            borderRadius: "6px",
+            fontSize: "14px",
           },
         }}
       />

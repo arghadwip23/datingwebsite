@@ -24,23 +24,30 @@ export async function POST(req) {
     const loveLanguage = formData.get("loveLanguage");
     const profilePhoto = formData.get("profilePhoto"); // File object
 
-    // 2️⃣ Hash password
+    // 2️⃣ Check if email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return new Response(
+        JSON.stringify({ success: false, message: "Email is already registered" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // 3️⃣ Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // 3️⃣ Upload image to Cloudinary (if provided)
+    // 4️⃣ Upload image to Cloudinary (if provided)
     let profileUrl = null;
     if (profilePhoto && typeof profilePhoto.arrayBuffer === "function") {
       const arrayBuffer = await profilePhoto.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      // use filename if available, otherwise fallback
       const filename = profilePhoto.name || `user_${Date.now()}`;
-
       profileUrl = await uploadToCloudinary(buffer, filename);
     }
 
-    // 4️⃣ Save user to MongoDB
+    // 5️⃣ Save user to MongoDB
     const newUser = new User({
       name,
       email,
@@ -55,6 +62,8 @@ export async function POST(req) {
       activityLevel,
       loveLanguage,
       profilePhoto: profileUrl,
+      verified: false,          // new field
+      locationVerified: false,  // new field
     });
 
     await newUser.save();
