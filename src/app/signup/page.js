@@ -9,14 +9,17 @@ export default function Signup() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    password: "", // Add this line
     profilePhoto: null,
     instagram: "",
     gender: "",
-    language: "",
     location: "",
-    favFood: "",
-    weekendPlan: "",
-    petLover: "",
+    relationshipGoal: "",
+    lifestyle: "",
+    weekendVibe: "",
+    schedule: "",
+    activityLevel: "",
+    loveLanguage: "",
   });
 
   const handleChange = (e) => {
@@ -56,141 +59,243 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-200 via-red-200 to-yellow-100 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-lg space-y-5"
+        className="bg-white shadow-sm rounded-lg p-8 w-full max-w-2xl space-y-6"
       >
-        <h2 className="text-3xl font-bold text-center text-pink-600">
-          💘 Find Your Perfect VITmate 💘
+        <h2 className="text-2xl font-normal text-gray-900 text-center">
+          Create your account
         </h2>
-        <p className="text-center text-gray-500">
-          We only allow lovebirds from VIT Chennai 🏫✨  
-          (Don’t worry, your location is just for verification — no stalking 🤞)
-        </p>
+        <div className="space-y-2 text-center">
+          <p className="text-gray-500 text-sm">
+            For VIT Chennai students only. Your information is kept private.
+          </p>
+          <p className="text-gray-600 text-sm font-medium">
+            All questions are required to find your perfect match
+          </p>
+        </div>
 
-        {/* Inputs */}
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name 😎"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email 📧"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="file"
-          name="profilePhoto"
-          accept="image/*"
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="text"
-          name="instagram"
-          placeholder="Instagram Handle 📸"
-          value={formData.instagram}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        />
+        {/* All form fields in single column */}
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500"
+            />
+            <span className="text-sm text-gray-500 pl-2">Enter your full name as per college ID</span>
+          </div>
 
-        <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="">Preferred Gender 💕</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="any">Surprise me 😉</option>
-        </select>
+          <div className="space-y-2">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500"
+            />
+            <span className="text-sm text-gray-500 pl-2">Use your VIT email address (@vitstudent.ac.in)</span>
+          </div>
 
-        <select
-          name="language"
-          value={formData.language}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="">Preferred Language 🗣️</option>
-          <option value="english">English</option>
-          <option value="tamil">Tamil</option>
-          <option value="hindi">Hindi</option>
-        </select>
+          <div className="space-y-2">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              minLength={8}
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500"
+            />
+            <span className="text-sm text-gray-500 pl-2">Must be at least 8 characters long</span>
+          </div>
 
-        <input
-          type="text"
-          name="location"
-          placeholder="Your Location 📍"
-          value={formData.location}
-          onChange={handleChange}
-          required
-          className="w-full p-3 border rounded-lg"
-        />
+          <div className="space-y-2">
+            <div className="flex flex-col space-y-2">
+              <label 
+                htmlFor="profilePhoto" 
+                className="w-fit px-4 py-2 bg-gray-100 text-gray-700 rounded-md text-sm cursor-pointer hover:bg-gray-200 transition-colors"
+              >
+                Choose Profile Photo
+              </label>
+              <input
+                id="profilePhoto"
+                type="file"
+                name="profilePhoto"
+                accept="image/*"
+                onChange={handleChange}
+                required
+                className="hidden"
+              />
+              <span className="text-sm text-gray-500">
+                {formData.profilePhoto ? formData.profilePhoto.name : "No file chosen"}
+              </span>
+            </div>
+          </div>
 
-        {/* Fun questions */}
-        <input
-          type="text"
-          name="favFood"
-          placeholder="Fav Food 🍕🍔"
-          value={formData.favFood}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        />
-        <input
-          type="text"
-          name="weekendPlan"
-          placeholder="Weekend Plan 🏖️🍿"
-          value={formData.weekendPlan}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        />
+          <div className="space-y-2">
+            <input
+              type="text"
+              name="instagram"
+              placeholder="Instagram Handle"
+              value={formData.instagram}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500"
+            />
+            <span className="text-sm text-gray-500 pl-2">Enter without @ symbol (e.g. johndoe)</span>
+          </div>
 
-        <select
-          name="petLover"
-          value={formData.petLover}
-          onChange={handleChange}
-          className="w-full p-3 border rounded-lg"
-        >
-          <option value="">Do you love pets? 🐶🐱</option>
-          <option value="yes">Yes, they’re my babies ❤️</option>
-          <option value="no">Nope, not really 🙃</option>
-        </select>
+          <div className="space-y-2">
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              value={formData.location}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-500"
+            />
+            <span className="text-sm text-gray-500 pl-2">Must be VIT Chennai or nearby areas</span>
+          </div>
+
+          <div className="space-y-2">
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+            >
+              <option value="" className="text-gray-500">Select Gender Preference</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="any">No Preference</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <select
+              name="relationshipGoal"
+              value={formData.relationshipGoal}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+            >
+              <option value="" className="text-gray-500">What are you looking for?</option>
+              <option value="longTerm">Long-term relationship</option>
+              <option value="casual">Something casual</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <select
+              name="lifestyle"
+              value={formData.lifestyle}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+            >
+              <option value="" className="text-gray-500">Which best describes your lifestyle?</option>
+              <option value="social">Social butterfly (love going out, events, meeting people)</option>
+              <option value="balanced">Balanced (a mix of going out and quiet time)</option>
+              <option value="lowKey">Low-key (prefer home, cozy nights, fewer social outings)</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <select
+              name="weekendVibe"
+              value={formData.weekendVibe}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+            >
+              <option value="" className="text-gray-500">What's your weekend vibe?</option>
+              <option value="outdoorsy">Outdoorsy/adventurous</option>
+              <option value="homebody">Relaxing at home</option>
+              <option value="explorer">Exploring food, culture, or nightlife</option>
+              <option value="productive">Catching up on hobbies/work</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <select
+              name="schedule"
+              value={formData.schedule}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+            >
+              <option value="" className="text-gray-500">Are you more of a...</option>
+              <option value="earlyBird">Early bird</option>
+              <option value="nightOwl">Night owl</option>
+              <option value="flexible">Flexible / depends on the day</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <select
+              name="activityLevel"
+              value={formData.activityLevel}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+            >
+              <option value="" className="text-gray-500">How active are you?</option>
+              <option value="veryActive">Very active (sports, gym, outdoors often)</option>
+              <option value="moderatelyActive">Moderately active (occasional exercise, walking, casual sports)</option>
+              <option value="notActive">Not active (prefer relaxing, low physical activity)</option>
+            </select>
+          </div>
+
+          <div className="space-y-2">
+            <select
+              name="loveLanguage"
+              value={formData.loveLanguage}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
+            >
+              <option value="" className="text-gray-500">What's your love language?</option>
+              <option value="wordsOfAffirmation">Words of affirmation</option>
+              <option value="qualityTime">Quality time</option>
+              <option value="actsOfService">Acts of service</option>
+              <option value="physicalTouch">Physical touch</option>
+              <option value="gifts">Gifts</option>
+            </select>
+          </div>
+        </div>
 
         <button
           type="submit"
-          className="w-full bg-pink-500 text-white p-3 rounded-lg hover:bg-pink-600 transition"
+          className="w-full bg-black text-white p-3 rounded-md hover:bg-gray-800 transition-colors text-sm font-medium"
         >
-          🚀 Sign Me Up
+          Create Account
         </button>
       </form>
 
-      {/* Toast container with pink theme */}
       <Toaster
         position="top-right"
         toastOptions={{
           style: {
-            background: "#ec4899",
+            background: "#18181b",
             color: "#fff",
-            borderRadius: "12px",
-            fontWeight: "bold",
+            borderRadius: "6px",
+            fontSize: "14px",
           },
           success: {
             iconTheme: {
               primary: "#fff",
-              secondary: "#ec4899",
+              secondary: "#18181b",
             },
           },
         }}
