@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from "react";
+
+import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
@@ -9,7 +10,7 @@ export default function Signup() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: "", // Add this line
+    password: "",
     profilePhoto: null,
     instagram: "",
     gender: "",
