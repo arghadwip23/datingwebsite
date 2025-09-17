@@ -273,7 +273,7 @@ export default function Signup() {
             required
             className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
           >
-            <option value="">What's your weekend vibe?</option>
+            <option value="">What&apos;s your weekend vibe?</option>
             <option value="outdoorsy">Outdoorsy/adventurous</option>
             <option value="homebody">Relaxing at home</option>
             <option value="explorer">Exploring food, culture, or nightlife</option>
@@ -313,7 +313,7 @@ export default function Signup() {
             required
             className="w-full p-3 border border-gray-200 rounded-md text-sm text-gray-700"
           >
-            <option value="">What's your love language?</option>
+            <option value="">What&apos;s your love language?</option>
             <option value="wordsOfAffirmation">Words of affirmation</option>
             <option value="qualityTime">Quality time</option>
             <option value="actsOfService">Acts of service</option>
