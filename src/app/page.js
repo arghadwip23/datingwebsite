@@ -12,14 +12,14 @@ const VitDatingApp = () => {
         {/* Hero Section */}
         <div className="text-center max-w-5xl mx-auto mb-20">
           <h1 className={"text-5xl md:text-6xl font-extrabold text-black mb-6 leading-tight " + inter.variable + " font-inter"}>
-            Where campus connections meet cutting-edge AI
+            Safe Dating for Verified College Students
           </h1>
           <p className="text-lg text-gray-600 mb-12 leading-relaxed">
-            Exclusively for students who code their way to love. Our advanced AI matches you with fellow campus minds who share your passion for innovation and late-night debugging sessions.
+            Join our exclusive community of verified college students. Every member is authenticated through their university email, ensuring you're connecting with real peers from your campus. Your privacy and security are our top priorities - with end-to-end encryption and strict verification protocols, you can focus on finding meaningful connections while we handle the safety.
           </p>
           <button className="bg-black text-white px-12 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors">
             <span className={macondoSwashCaps.variable + " font-macondo-swash-caps"}>
-              Start Finding
+              Find Your Match
             </span>
           </button>
         </div>
