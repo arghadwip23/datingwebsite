@@ -1,8 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { Berkshire_Swash } from "next/font/google";
 import "./globals.css";
-import HeartCursor from "./HeartCursor";
-import Navigation from "@/components/Nav";
+import Navigation from "../components/Nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +31,6 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${berkshireSwash.variable} antialiased`}
       >
         <Navigation />
-        <HeartCursor />
         {children}
       </body>
     </html>
